@@ -1,0 +1,410 @@
+@font-face {
+    font-display: swap;
+    font-family: 'Zabars';
+    src: url('./fonts/Zabars.ttf') format('truetype');
+}
+
+* {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    margin: 0;
+    word-break: break-word;
+}
+
+body {
+    font-family: 'Zabars', Arial, sans-serif;
+    letter-spacing: 0.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('img/5_background/desert-background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    color: #fff;
+}
+
+h1 {
+    font-size: 54px;
+    margin-bottom: 24px;
+}
+
+button, a {
+    text-transform: uppercase;
+    max-width: 200px;
+    height: 40px;
+    cursor: pointer;
+    font-family: 'Zabars';
+    letter-spacing: 0.1em;
+    font-weight: 200;
+    font-size: 24px;
+    padding: 8px 16px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.start-screen-overlay {
+    position: absolute;
+    width: 800px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 98;
+    background-image: url('./img/9_intro_outro_screens/start/startscreen_1.png');
+    background-position: center right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.start-buttons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#instruction-start-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+canvas {
+    display: block;
+}
+
+section {
+    padding: 16px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.game-content {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+#start-game-btn {
+    z-index: 99;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 8px 16px;
+}
+
+#start-game-btn:hover {
+    background-color: #232323;
+    color: #fff;
+}
+
+/* Game Overlay Styles */
+.game-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 16px;
+    width: 800px;
+    height: 480px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: flex-end;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translate(-50%, -50%);
+}
+
+.restart-button, .home-button {
+    margin-bottom: 32px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+}
+
+.home-button {
+    background-color: #eee;
+}
+
+.restart-button-hover, .home-button-hover {
+    background-color: #232323;
+    color: #fff;
+}
+
+/* Game settings container */
+.game-settings {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    z-index: 99;
+    width: auto;
+    height: auto;
+    pointer-events: auto;
+}
+
+/* Audio button styles */
+.audio-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 102;
+    padding: 0;
+    transition: all 0.3s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: none;
+    pointer-events: auto;
+}
+
+.audio-button:focus {
+    outline: none;
+}
+
+.audio-button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Audio button states */
+.audio-on {
+    background-color: rgba(0, 128, 0, 0.5);
+}
+
+.audio-off {
+    background-color: rgba(128, 0, 0, 0.5);
+}
+
+/* Instruction button styles */
+.instruction-info-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 102;
+    padding-left: 20px;
+    transition: all 0.3s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: none;
+    pointer-events: auto;
+}
+
+/* Hover/active effects for buttons */
+.audio-button:hover,
+.audio-button:active,
+.instruction-info-button:hover,
+.instruction-info-button:active {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Update instruction popup styling */
+.instruction-template {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 8px;
+    z-index: 99;
+    text-align: center;
+}
+
+.legal-notice-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    text-align: center;
+}
+
+.legal-notice-link {
+    font-family: 'Zabars', Arial, sans-serif;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    border: 1px solid white;
+    transition: all 0.2s ease;
+}
+
+/* Improved touch target and interaction styles */
+.legal-notice-link:hover,
+.legal-notice-link:active {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.05);
+}
+
+.d-none {
+    display: none;
+}
+
+/* Responsive Rotation Warning */
+@media (max-width: 1024px) and (orientation: portrait) and (hover: none) {
+    body::before {
+        content: 'Please rotate your device to landscape mode';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        text-align: center;
+        font-size: 32px;
+        padding: 8px;
+        overflow-wrap: break-word;
+    }
+
+    /* Hide game content when in portrait mode */
+    .game-content {
+        display: none;
+    }
+}
+
+/* Mobile Control Buttons */
+@media (max-width: 1024px) {
+    canvas {
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .start-screen-overlay {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .game-overlay {
+        padding: 16px;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .game-content {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .legal-notice-link {
+        padding: 8px 16px;
+        display: inline-block;
+    }
+    
+    .audio-button, 
+    .instruction-info-button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .mobile-controls {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+
+    .mobile-controls .left-controls,
+    .mobile-controls .right-controls {
+        position: absolute;
+        display: flex;
+        gap: 10px;
+    }
+
+    .mobile-controls .left-controls {
+        left: 20px;
+    }
+
+    .mobile-controls .right-controls {
+        right: 20px;
+    }
+
+    .mobile-control-btn {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .mobile-control-btn img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .mobile-control-btn:active {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+}

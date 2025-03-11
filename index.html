@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>El Pollo Locco</title>
+    <link rel="shortcut icon" href="./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png" type="image/png">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./classes/drawable-object.class.js"></script>
+    <script src="./classes/moveable-object.class.js"></script>
+    <script src="./classes/character.class.js"></script>
+    <script src="./classes/chicken.class.js"></script>
+    <script src="./classes/chicken-small.class.js"></script>
+    <script src="./classes/cloud.class.js"></script>
+    <script src="./classes/status-bar.class.js"></script>
+    <script src="./classes/status-bar-coin.class.js"></script>
+    <script src="./classes/status-bar-bottle.class.js"></script>
+    <script src="./classes/status-bar-endboss.class.js"></script>
+    <script src="./classes/coin.class.js"></script>
+    <script src="./classes/bottle.class.js"></script>
+    <script src="./classes/level.class.js"></script>
+    <script src="./classes/throwable-object.class.js"></script>
+    
+    <script src="./classes/world-core.class.js"></script>
+    <script src="./classes/world-drawing.class.js"></script>
+    <script src="./classes/world-collisions.class.js"></script>
+    <script src="./classes/world-gameplay.class.js"></script>
+
+    <script src="./classes/audio-manager-core.class.js"></script>
+    <script src="./classes/audio-manager-ui.class.js"></script>
+    <script src="./classes/audio-manager-state.class.js"></script>
+    <script src="./classes/audio-manager-playback.class.js"></script>
+    <script src="./classes/audio-manager.class.js"></script>
+
+    <script src="./classes/background-object.class.js"></script>
+    <script src="./classes/keyboard.class.js"></script>
+    
+    <script src="./classes/endboss-core.class.js"></script>
+    <script src="./classes/endboss-animation.class.js"></script>
+    <script src="./classes/endboss-behavior.class.js"></script>
+    <script src="./classes/endboss-combat.class.js"></script>
+    <script src="./classes/endboss.class.js"></script>
+
+    <script src="./levels/level1.js"></script>
+
+    <script src="./js/game-ui.js"></script>
+    <script src="./js/game-mobile.js"></script>
+    <script src="./js/game-controls.js"></script>
+    <script src="./js/game-core.js"></script>
+</head>
+<body>
+    <h1>El Pollo Locco</h1>
+    <section class="game-content">
+        <canvas width="800" height="480" id="canvas"></canvas>
+        <div id="start-screen" class="start-screen-overlay">
+            <div class="start-buttons">
+                <button id="start-game-btn" onclick="initLevel1(), init(), removeStartScreen()">Start Game</button>
+                <button id="instruction-start-btn" class="instruction-info-button">?</button>
+            </div>
+            <div class="legal-notice-container">
+                <a href="./legal-notice.html" class="legal-notice-link" style="font-family: Arial, sans-serif;">Legal Notice</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="instruction-template d-none" id="instruction-template" style="font-family: Arial, sans-serif;">
+        <h3>Instruction</h3><br>
+        <p>Arrow Left or 'A' Key - move to left</P>
+        <p>Arrow Right or 'D' Key - move to right</P>
+        <p>'Spacebar' Key - jump</P>
+        <p>'F' Key - throw tabasco bottle</P>
+    </section>
+</body>
+</html>
