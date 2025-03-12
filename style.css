@@ -288,12 +288,16 @@ section {
     transform: scale(1.05);
 }
 
+.mobile-control-btn {
+    display: none;
+}
+
 .d-none {
     display: none;
 }
 
 /* Responsive Rotation Warning */
-@media (max-width: 1024px) and (orientation: portrait) and (hover: none) {
+@media (max-width: 1400px) and (orientation: portrait) {
     body::before {
         content: 'Please rotate your device to landscape mode';
         position: fixed;
@@ -320,7 +324,7 @@ section {
 }
 
 /* Mobile Control Buttons */
-@media (max-width: 1024px) {
+@media (max-width: 1400px) {
     canvas {
         width: 100%;
         min-height: 100vh;

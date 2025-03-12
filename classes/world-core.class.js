@@ -2,7 +2,6 @@
  * Main game world class that manages all game objects and core logic
  */
 class World {
-    // Grundlegende Eigenschaften
     character = new Character();
     level = level1;
     canvas;

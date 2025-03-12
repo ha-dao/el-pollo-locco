@@ -29,9 +29,27 @@ let lastBottleThrow = 0;
 const bottleThrowCooldown = 300;
 
 /**
+ * Global timestamp to track when the game started
+ * @type {number}
+ */
+let gameStartTimestamp = 0;
+
+/**
+ * Asynchronously loads the level and initializes the game
+ */
+function startGame() {
+    initLevel1();
+
+        init();
+
+    removeStartScreen();
+}
+
+/**
  * Initializes the game by setting up the world and canvas
  */
 function init() {
+    gameStartTimestamp = new Date().getTime();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 
@@ -71,7 +89,17 @@ function restartGame() {
     removeGameOverlay();
     removeMobileControlsIfExist();
     const isMuted = preserveAudioState();
-    resetGameComponents(isMuted);
+    
+    setTimeout(() => {
+        initLevel1();
+        
+        setTimeout(() => {
+            keyboard = new Keyboard();
+            setupKeyboardControls();
+            init();
+            restoreAudioState(isMuted);
+        }, 50);
+    }, 0);
 }
 
 /**
@@ -128,6 +156,8 @@ function restoreAudioState(isMuted) {
     }
 }
 
-// Initialize event listeners when document loads
+/**
+ * Initialize event listeners when document loads
+ */ 
 document.addEventListener('DOMContentLoaded', setupTouchButtons);
 document.addEventListener('DOMContentLoaded', setupKeyboardControls);

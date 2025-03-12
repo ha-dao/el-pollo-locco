@@ -183,3 +183,19 @@ World.prototype.stopAndSplashBottle = function(bottle) {
 World.prototype.removeBottle = function(index) {
     this.throwableObjects.splice(index, 1);
 };
+
+/**
+ * Creates a new throwable bottle object that respects character direction
+ */
+World.prototype.createThrowableBottle = function() {
+    const isFacingLeft = this.character.otherDirection;
+    const offsetX = isFacingLeft ? -40 : 100;
+    
+    let bottle = new ThrowableObject(
+        this.character.x + offsetX, 
+        this.character.y + 100,
+        isFacingLeft
+    );
+    
+    this.throwableObjects.push(bottle);
+};

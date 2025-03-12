@@ -76,7 +76,6 @@ class AudioManagerState extends AudioManagerUI {
         bgMusic.pause();
         bgMusic.currentTime = 0;
         
-        // Remove the audio element and recreate it
         this.sounds.backgroundMusic = new Audio('./audio/background-music.mp3');
         this.sounds.backgroundMusic.loop = true;
         this.sounds.backgroundMusic.volume = 0.3;

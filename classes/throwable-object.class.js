@@ -1,19 +1,48 @@
 /**
- * Represents a throwable object (bottle) in the game
+ * Represents a throwable object in the game
  * @extends MoveableObject
  */
 class ThrowableObject extends MoveableObject {
     /**
-     * Images for bottle rotation animation
+     * Speed on X-axis
+     * @type {number}
+     */
+    speedX = 4;
+    
+    /**
+     * Whether the bottle has hit an enemy
+     * @type {boolean}
+     */
+    hasHitEnemy = false;
+    
+    /**
+     * Interval identifier for the throw animation
+     * @type {number}
+     */
+    throwInterval = null;
+    
+    /**
+     * Collision offset values
+     * @type {Object}
+     */
+    offset = {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+    };
+    
+    /**
+     * Images for bottle in the air
      * @type {string[]}
      */
-    IMAGES_ROTATION = [
+    IMAGES_BOTTLE = [
         './img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         './img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
         './img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
-        './img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
+        './img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
-
+    
     /**
      * Images for bottle splash animation
      * @type {string[]}
@@ -28,101 +57,71 @@ class ThrowableObject extends MoveableObject {
     ];
 
     /**
-     * Collision offset values
-     * @type {Object}
-     */
-    offset = {
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10
-    };
-    
-    /**
-     * Whether the bottle has hit an enemy
-     * @type {boolean}
-     */
-    hasHitEnemy = false;
-
-    /**
      * Creates a new throwable object
-     * @param {number} x - Starting x position
-     * @param {number} y - Starting y position
+     * @param {number} x - X position of the throw origin
+     * @param {number} y - Y position of the throw origin
+     * @param {boolean} [facingLeft=false] - Whether to throw to the left
      */
-    constructor(x, y) {
+    constructor(x, y, facingLeft = false) {
         super();
-        this.initializeBottle(x, y);
-        this.throw();
+        this.initializeThrowableObject(x, y, facingLeft);
     }
     
     /**
-     * Initializes the bottle properties
-     * @param {number} x - Starting x position
-     * @param {number} y - Starting y position
+     * Initializes the throwable object properties
+     * @param {number} x - X position of the throw origin
+     * @param {number} y - Y position of the throw origin
+     * @param {boolean} facingLeft - Whether to throw to the left
      */
-    initializeBottle(x, y) {
-        this.loadImage('./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-        this.loadImages(this.IMAGES_ROTATION);
+    initializeThrowableObject(x, y, facingLeft) {
+        this.loadImage(this.IMAGES_BOTTLE[0]);
+        this.loadImages(this.IMAGES_BOTTLE);
         this.loadImages(this.IMAGES_SPLASH);
-        this.x = x - 50;
-        this.y = y - 80;
-        this.width = 50;
+        
+        this.x = x;
+        this.y = y;
+        this.width = 60;
         this.height = 60;
+        this.otherDirection = facingLeft; // Set sprite direction
+        this.throw(facingLeft);
     }
 
     /**
-     * Throws the bottle with physics and animation
+     * Initiates the throwing animation and physics
+     * @param {boolean} facingLeft - Whether to throw to the left
      */
-    throw() {
-        this.initializeThrowPhysics();
-        this.startAnimationAndMovement();
-        this.setupAutoSplash();
-    }
-    
-    /**
-     * Initializes throw physics
-     */
-    initializeThrowPhysics() {
-        this.speedY = 20;
+    throw(facingLeft) {
+        this.speedY = 25;
         this.applyGravity();
-    }
-    
-    /**
-     * Starts bottle animation and movement
-     */
-    startAnimationAndMovement() {
+        const directionMultiplier = facingLeft ? -1 : 1;
+        
         this.throwInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_ROTATION);
-            this.x += 5;
-        }, 20);
+            this.x += this.speedX * directionMultiplier;
+            this.playAnimation(this.IMAGES_BOTTLE);
+            this.checkBottleOutOfBounds();
+        }, 25);
     }
     
     /**
-     * Sets up automatic splash after timeout
+     * Checks if the bottle is out of visible area and removes it
      */
-    setupAutoSplash() {
-        setTimeout(() => {
-            this.playSplashAnimation();
-        }, 5000);
+    checkBottleOutOfBounds() {
+        if (this.y > 400 || this.x < -500 || this.x > 3000) {
+            this.removeBottle();
+        }
     }
     
     /**
-     * Plays the splash animation and removes the bottle
+     * Removes the bottle from the scene
      */
-    playSplashAnimation() {
-        this.playAnimation(this.IMAGES_SPLASH);
+    removeBottle() {
         clearInterval(this.throwInterval);
         
-        setTimeout(() => {
-            this.removeFromWorld();
-        }, 200);
-    }
-    
-    /**
-     * Removes this bottle from the world
-     */
-    removeFromWorld() {
-        const index = world.throwableObjects.indexOf(this);
-        if (index > -1) world.throwableObjects.splice(index, 1);
+        if (this.world) {
+            const index = this.world.throwableObjects.indexOf(this);
+            if (index > -1) {
+                this.world.throwableObjects.splice(index, 1);
+            }
+        }
     }
 }

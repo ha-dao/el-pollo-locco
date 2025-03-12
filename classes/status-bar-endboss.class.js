@@ -23,6 +23,12 @@ class StatusBarEndboss extends StatusBar {
     percentages = 100;
 
     /**
+     * Visibility state of the status bar
+     * @type {boolean}
+     */
+    visible = false;
+
+    /**
      * Creates a new endboss status bar
      */
     constructor() {
@@ -74,22 +80,20 @@ class StatusBarEndboss extends StatusBar {
     }
 
     /**
-     * Determines the image index based on percentage
-     * @returns {number} The index of the image to use
+     * Sets the visibility state of the status bar
+     * @param {boolean} isVisible - Whether the status bar should be visible
      */
-    resolveImageIndex() {
-        if (this.percentage == 100) {
-            return 5;
-        } else if (this.percentage > 80) {
-            return 4;
-        } else if (this.percentage > 60) {
-            return 3;
-        } else if (this.percentage > 40) {
-            return 2;
-        } else if (this.percentage > 20) {
-            return 1;
-        } else {
-            return 0;
+    setVisibility(isVisible) {
+        this.visible = isVisible;
+    }
+
+    /**
+     * Overrides the draw method to check visibility before drawing
+     * @param {CanvasRenderingContext2D} ctx - The canvas context
+     */
+    draw(ctx) {
+        if (this.visible) {
+            super.draw(ctx);
         }
     }
 }
